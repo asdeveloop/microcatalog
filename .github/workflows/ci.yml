@@ -1,50 +1,68 @@
-# path: .github/workflows/ci.yml
 name: CI
 
 on:
   push:
-    branches:
-      - main
-      - develop
+    branches: [main, develop]
   pull_request:
-    branches:
-      - main
-      - develop
+    branches: [main, develop]
 
 jobs:
-  build:
-    name: Build & Quality Check
+  quality:
+    name: Quality Gates
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: app_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/app_test
+      JWT_SECRET: test-jwt-secret
+      JWT_EXPIRES_IN: 1h
+      CORS_ORIGIN: http://localhost:3001
+      API_PREFIX: api/v1
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+      - uses: pnpm/action-setup@v4
         with:
           version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Type Check
-        run: pnpm -r exec tsc --noEmit
-
       - name: Lint
-        run: pnpm lint
+        run: pnpm run --filter @microcatalog/backend lint
 
-      - name: Format Check
-        run: pnpm format:check
+      - name: Format check
+        run: pnpm run --filter @microcatalog/backend format:check
 
-      - name: Build Backend
-        run: pnpm --filter backend build
+      - name: Type check
+        run: pnpm run --filter @microcatalog/backend type-check
 
-      - name: Build Frontend
-        run: pnpm --filter frontend build
+      - name: Push DB schema (test)
+        run: pnpm run --filter @microcatalog/backend db:push
+
+      - name: Tests
+        run: pnpm run --filter @microcatalog/backend test:cov
+
+      - name: Build
+        run: pnpm run --filter @microcatalog/backend build
