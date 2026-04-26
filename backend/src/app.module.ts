@@ -2,6 +2,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import databaseConfig from './config/database.config';
+import { DatabaseModule } from './shared/database/database.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import databaseConfig from './config/database.config';
       load: [databaseConfig],
       envFilePath: '.env',
     }),
+    DatabaseModule,
   ],
   controllers: [],
   providers: [],
