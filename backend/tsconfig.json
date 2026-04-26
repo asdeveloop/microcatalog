@@ -3,12 +3,6 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": "./src",
-    "paths": {
-      "@shared/*": ["shared/*"],
-      "@modules/*": ["modules/*"],
-      "@config/*": ["config/*"]
-    },
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "incremental": true
