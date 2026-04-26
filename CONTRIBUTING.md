@@ -22,7 +22,8 @@ Thank you for contributing to this project!
 - Update documentation as needed
 
 ### Before Committing
-```bash
+
+````bash
 # Run linting
 pnpm lint:fix
 
@@ -191,3 +192,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Project repository baseline (Task 3.1)
 - Initial commit with production-ready structure
+````

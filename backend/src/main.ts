@@ -38,10 +38,7 @@ async function bootstrap() {
   );
 
   // Global filters
-  app.useGlobalFilters(
-    new AllExceptionsFilter(),
-    new HttpExceptionFilter(),
-  );
+  app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
 
   // Global interceptors
   app.useGlobalInterceptors(new ResponseInterceptor());

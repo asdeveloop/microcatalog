@@ -23,9 +23,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const exceptionResponse = exception.getResponse();
 
     const errorCode = this.mapStatusToErrorCode(status);
-    const message = typeof exceptionResponse === 'string' 
-      ? exceptionResponse 
-      : (exceptionResponse as any).message || exception.message;
+    const message =
+      typeof exceptionResponse === 'string'
+        ? exceptionResponse
+        : (exceptionResponse as any).message || exception.message;
 
     const errorResponse: ApiResponse = {
       success: false,
