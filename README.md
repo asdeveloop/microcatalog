@@ -1,4 +1,3 @@
-# path: README.md
 # Project Repository
 
 **Modular Monolith** — Backend (NestJS) + Frontend (Next.js)
