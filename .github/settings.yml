@@ -1,0 +1,20 @@
+repository:
+  allow_auto_merge: true
+  delete_branch_on_merge: true
+
+branches:
+  - name: develop
+    protection:
+      required_pull_request_reviews:
+        required_approving_review_count: 1
+        dismiss_stale_reviews: true
+      required_status_checks:
+        strict: true
+        contexts:
+          - "Quality Gates"
+          - "Dependency Audit (pnpm workspace)"
+          - "Trivy FS Scan"
+          - "Secret Scan (Gitleaks)"
+          - "Analyze (JavaScript/TypeScript)"
+      enforce_admins: true
+      required_conversation_resolution: true
