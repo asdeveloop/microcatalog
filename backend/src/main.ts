@@ -1,64 +1,56 @@
-// path: backend/src/main.ts (update)
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, Logger } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from 'helmet';
-import compression = require('compression');
+import compression from 'compression';
 import { AppModule } from './app.module';
+import { TransformResponseInterceptor } from './shared/interceptors/transform-response.interceptor';
 import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter';
-import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
-import { ResponseInterceptor } from './shared/interceptors/response.interceptor';
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
+  const logger = new Logger('Bootstrap');
 
-  // Security
+  // ── Security ──────────────────────────────────────────────
   app.use(helmet());
+  app.enableCors({ origin: true, credentials: true });
   app.use(compression());
 
-  // CORS
-  app.enableCors({
-    origin: process.env.CORS_ORIGIN?.split(',') || ['http://localhost:3000'],
-    credentials: true,
-  });
-
-  // Global prefix
-  app.setGlobalPrefix(process.env.API_PREFIX || 'api/v1');
-
-  // Global pipes
+  // ── Validation ───────────────────────────────────────────
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
       transform: true,
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
+      transformOptions: { enableImplicitConversion: true },
     }),
   );
 
-  // Global filters
-  app.useGlobalFilters(new AllExceptionsFilter(), new HttpExceptionFilter());
+  // ── Global Filters ───────────────────────────────────────
+  app.useGlobalFilters(new AllExceptionsFilter());
 
-  // Global interceptors
-  app.useGlobalInterceptors(new ResponseInterceptor());
+  // ── Global Interceptors ──────────────────────────────────
+  app.useGlobalInterceptors(new TransformResponseInterceptor());
 
-  // Swagger
+  // ── API Prefix ───────────────────────────────────────────
+  const apiPrefix = process.env.API_PREFIX ?? 'api/v1';
+  app.setGlobalPrefix(apiPrefix);
+
+  // ── Swagger ──────────────────────────────────────────────
   const config = new DocumentBuilder()
-    .setTitle('API Documentation')
-    .setDescription('RESTful API documentation')
-    .setVersion('1.0')
+    .setTitle('Microcatalog API')
+    .setDescription('Microcatalog — Modular Monolith API')
+    .setVersion('0.1.0')
     .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document);
+  SwaggerModule.setup(`${apiPrefix}/docs`, app, document);
 
-  const port = process.env.PORT || 3001;
+  // ── Start ────────────────────────────────────────────────
+  const port = process.env.PORT ?? 3000;
   await app.listen(port);
-
-  console.log(`🚀 Application is running on: http://localhost:${port}`);
-  console.log(`📚 Swagger docs: http://localhost:${port}/api/docs`);
+  logger.log(`🚀 Application running on port ${port}`);
 }
 
-bootstrap();
+void bootstrap();
