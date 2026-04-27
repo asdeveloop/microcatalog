@@ -45,3 +45,5 @@ docker-compose.override.yml
 
 # Obsidian
 .obsidian/
+
+merge_all_branches.sh
