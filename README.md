@@ -1,5 +1,9 @@
 # MicroCatalog
 
+<p align="center">
+  <img src="./assets/repo-preview.svg" alt="MicroCatalog preview" width="100%" />
+</p>
+
 Practical catalog platform concept for sellers who need a lightweight digital storefront under constrained online conditions.
 
 ## What This Project Is

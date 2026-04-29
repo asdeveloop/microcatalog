@@ -1,0 +1,21 @@
+<svg width="1280" height="520" viewBox="0 0 1280 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="520" rx="28" fill="#0F172A"/>
+  <rect x="48" y="48" width="1184" height="424" rx="24" fill="#111827" stroke="#334155"/>
+  <text x="84" y="118" fill="#FDBA74" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">MICROCATALOG</text>
+  <text x="84" y="174" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="42" font-weight="800">Catalog platform for constrained seller ecosystems</text>
+  <text x="84" y="224" fill="#CBD5E1" font-family="Segoe UI, Arial, sans-serif" font-size="22">A lightweight digital storefront path for local sellers, mobile-first discovery, and simple inquiry flow.</text>
+  <rect x="84" y="274" width="200" height="46" rx="12" fill="#EA580C"/>
+  <text x="112" y="304" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Catalogs</text>
+  <rect x="302" y="274" width="220" height="46" rx="12" fill="#1D4ED8"/>
+  <text x="334" y="304" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Mobile-first</text>
+  <rect x="540" y="274" width="210" height="46" rx="12" fill="#0F766E"/>
+  <text x="568" y="304" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">MVP-ready</text>
+  <rect x="874" y="116" width="286" height="220" rx="18" fill="#020617" stroke="#1E293B"/>
+  <rect x="900" y="146" width="114" height="12" rx="6" fill="#22C55E"/>
+  <rect x="900" y="178" width="222" height="10" rx="5" fill="#FED7AA"/>
+  <rect x="900" y="208" width="204" height="10" rx="5" fill="#94A3B8"/>
+  <rect x="900" y="238" width="168" height="10" rx="5" fill="#475569"/>
+  <rect x="900" y="278" width="148" height="18" rx="9" fill="#EA580C"/>
+  <text x="916" y="292" fill="white" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="800">SELLER FLOW</text>
+  <text x="84" y="384" fill="#E2E8F0" font-family="Segoe UI, Arial, sans-serif" font-size="18">Positioned for sellers who need an independent fallback to unstable social channels.</text>
+</svg>
